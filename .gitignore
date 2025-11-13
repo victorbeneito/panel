@@ -1,4 +1,4 @@
-# Logs
+# Directorios y archivos de Logs
 logs
 *.log
 npm-debug.log*
@@ -7,13 +7,44 @@ yarn-error.log*
 pnpm-debug.log*
 lerna-debug.log*
 
-node_modules
+# Directorios de dependencias
+node_modules/
+jspm_packages/
+bower_components
+
+# Archivos compilados y de caché
 dist
 dist-ssr
+build/Release
+.cache
+.parcel-cache
+.npm
+.eslintcache
+.stylelintcache
+.nyc_output
+coverage
+*.lcov
+lib-cov
+.grunt
+.next
+out
+.nuxt
+.tsbuildinfo
+.node_repl_history
+*.tgz
+.yarn-integrity
+web_modules/
+.temp
+.cache
+
+# Archivos de entorno y de configuración local
+.env
+.env.*
+!.env.example
 *.local
 
-# Editor directories and files
-.vscode/*
+# Editor y sistema
+.vscode/
 !.vscode/extensions.json
 .idea
 .DS_Store
@@ -22,3 +53,41 @@ dist-ssr
 *.njsproj
 *.sln
 *.sw?
+
+# Varios frameworks y herramientas modernas (Conservado de la versión remota)
+# Vuepress, Sveltekit, Vitepress, Docusaurus
+.vuepress/dist
+.vuepress/dist
+.svelte-kit/
+**/.vitepress/dist
+**/.vitepress/cache
+.docusaurus
+
+# Serveless y Firebase
+.serverless/
+.firebase/
+.dynamodb/
+
+# Herramientas de desarrollo
+.tern-port
+.vscode-test
+vite.config.js.timestamp-*
+vite.config.ts.timestamp-*
+
+# yarn v3
+.pnp.*
+.yarn/*
+!.yarn/patches
+!.yarn/plugins
+!.yarn/releases
+!.yarn/sdks
+!.yarn/versions
+
+# Informes de diagnóstico
+report.[0-9]*.[0-9]*.[0-9]*.[0-9]*.json
+
+# Datos de tiempo de ejecución
+pids
+*.pid
+*.seed
+*.pid.lock
