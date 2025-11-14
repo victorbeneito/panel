@@ -17,14 +17,6 @@ function App() {
         <Routes>
           <Route path="/login" element={<Login />} />
           <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Dashboard />
-              </PrivateRoute>
-            }
-          />
-          <Route
             path="/dashboard"
             element={
               <PrivateRoute>
@@ -72,8 +64,7 @@ function App() {
               </PrivateRoute>
             }
           />
-          {/* Opcional: Ruta para páginas no encontradas */}
-          {/* <Route path="*" element={<NotFound />} /> */}
+          {/* Puedes añadir aquí una ruta por defecto/redirección */}
         </Routes>
       </BrowserRouter>
     </AuthProvider>
@@ -81,3 +72,4 @@ function App() {
 }
 
 export default App;
+
