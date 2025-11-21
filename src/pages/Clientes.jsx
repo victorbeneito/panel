@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import clienteAxios from '../config/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 export default function Clientes() {
@@ -20,7 +20,7 @@ export default function Clientes() {
 
   async function fetchClientes() {
     try {
-      const { data } = await axios.get('http://localhost:3000/clientes', {
+      const { data } = await clienteAxios.get('/clientes', {
         headers: getHeaders()
       });
       setClientes(data.clientes || data);
@@ -37,11 +37,11 @@ export default function Clientes() {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/clientes/${editingId}`, formData, {
+        await clienteAxios.put(`/clientes/${editingId}`, formData, {
           headers: getHeaders()
         });
       } else {
-        await axios.post('http://localhost:3000/clientes', formData, {
+        await clienteAxios.post('/clientes', formData, {
           headers: getHeaders()
         });
       }
@@ -62,7 +62,7 @@ export default function Clientes() {
   const handleDelete = async id => {
     if (!window.confirm('¿Eliminar cliente?')) return;
     try {
-      await axios.delete(`http://localhost:3000/clientes/${id}`, {
+      await clienteAxios.delete(`/clientes/${id}`, {
         headers: getHeaders()
       });
       fetchClientes();

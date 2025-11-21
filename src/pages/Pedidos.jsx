@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import clienteAxios from '../config/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 export default function Pedidos() {
@@ -14,7 +14,7 @@ export default function Pedidos() {
   async function fetchPedidos() {
     try {
       const token = localStorage.getItem('token');
-      const { data } = await axios.get('http://localhost:3000/pedidos', {
+      const { data } = await clienteAxios.get('/pedidos', {
         headers: { Authorization: `Bearer ${token}` }
       });
       setPedidos(data.pedidos || data);
@@ -27,7 +27,7 @@ export default function Pedidos() {
     if (!window.confirm('¿Eliminar pedido?')) return;
     try {
       const token = localStorage.getItem('token');
-      await axios.delete(`http://localhost:3000/pedidos/${id}`, {
+      await clienteAxios.delete(`/pedidos/${id}`, {
         headers: { Authorization: `Bearer ${token}` }
       });
       fetchPedidos();

@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import clienteAxios from '../config/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 export default function Marca() {
@@ -20,7 +20,7 @@ export default function Marca() {
 
   async function fetchMarcas() {
     try {
-      const { data } = await axios.get('http://localhost:3000/marcas', {
+      const { data } = await clienteAxios.get('/marcas', {
         headers: getHeaders()
       });
       setMarcas(data.marcas || data);
@@ -37,11 +37,11 @@ export default function Marca() {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/marcas/${editingId}`, formData, {
+        await clienteAxios.put(`/marcas/${editingId}`, formData, {
           headers: getHeaders()
         });
       } else {
-        await axios.post('http://localhost:3000/marcas', formData, {
+        await clienteAxios.post('/marcas', formData, {
           headers: getHeaders()
         });
       }
@@ -62,7 +62,7 @@ export default function Marca() {
   const handleDelete = async id => {
     if (!window.confirm('¿Eliminar marca?')) return;
     try {
-      await axios.delete(`http://localhost:3000/marcas/${id}`, {
+      await clienteAxios.delete(`/marcas/${id}`, {
         headers: getHeaders()
       });
       fetchMarcas();

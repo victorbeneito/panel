@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from 'react';
-import axios from 'axios';
+import clienteAxios from '../config/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 export default function Categoria() {
@@ -20,7 +20,7 @@ export default function Categoria() {
 
  async function fetchCategorias() {
   try {
-    const { data } = await axios.get('http://localhost:3000/categorias', {
+    const { data } = await clienteAxios.get('/categorias', {
       headers: getHeaders()
     });
     setCategorias(Array.isArray(data) ? data : []);
@@ -39,11 +39,11 @@ export default function Categoria() {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/categorias/${editingId}`, formData, {
+        await clienteAxios.put(`/categorias/${editingId}`, formData, {
           headers: getHeaders()
         });
       } else {
-        await axios.post('http://localhost:3000/categorias', formData, {
+        await clienteAxios.post('/categorias', formData, {
           headers: getHeaders()
         });
       }
@@ -64,7 +64,7 @@ export default function Categoria() {
   const handleDelete = async id => {
     if (!window.confirm('¿Eliminar categoría?')) return;
     try {
-      await axios.delete(`http://localhost:3000/categorias/${id}`, {
+      await clienteAxios.delete(`/categorias/${id}`, {
         headers: getHeaders()
       });
       fetchCategorias();

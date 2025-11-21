@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import axios from 'axios';
+import clienteAxios from '../config/axiosClient';
 import { useAuth } from '../context/authContext';
 import { useNavigate } from 'react-router-dom';
 
@@ -14,7 +14,7 @@ export default function Login() {
     e.preventDefault();
     setError('');
     try {
-      const response = await axios.post('http://localhost:3000/auth/login', { email, password });
+      const response = await clienteAxios.post('/auth/login', { email, password });
       if (response.data.token) {
         login(response.data.token); // Guarda token en contexto y localStorage
         navigate('/dashboard');     // Redirige al dashboard/panel

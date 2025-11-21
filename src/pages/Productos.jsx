@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import axios from 'axios';
+import clienteAxios from '../config/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------
@@ -24,7 +24,7 @@ function VarianteInput({ variante, index, onChange, onRemove }) {
     formData.append('image', file);
 
     try {
-      const { data } = await axios.post('http://localhost:3000/api/upload-image', formData, {
+      const { data } = await clienteAxios.post('/api/upload-image', formData, {
         headers: { ...getHeaders(), 'Content-Type': 'multipart/form-data' },
       });
       if (data.ok) {
@@ -122,7 +122,7 @@ export default function Productos() {
 
   async function fetchProductos() {
     try {
-      const { data } = await axios.get('http://localhost:3000/productos', {
+      const { data } = await clienteAxios.get('/productos', {
         headers: getHeaders(),
       });
       console.log('Respuesta productos API:', data);
@@ -135,8 +135,8 @@ export default function Productos() {
   async function fetchMarcasYCategorias() {
     try {
       const [resMarcas, resCategorias] = await Promise.all([
-        axios.get('http://localhost:3000/marcas', { headers: getHeaders() }),
-        axios.get('http://localhost:3000/categorias', { headers: getHeaders() }),
+        clienteAxios.get('/marcas', { headers: getHeaders() }),
+        clienteAxios.get('/categorias', { headers: getHeaders() }),
       ]);
       setMarcas(resMarcas.data);
       setCategorias(resCategorias.data);
@@ -189,11 +189,11 @@ export default function Productos() {
     e.preventDefault();
     try {
       if (editingId) {
-        await axios.put(`http://localhost:3000/productos/${editingId}`, formData, {
+        await clienteAxios.put(`/productos/${editingId}`, formData, {
           headers: getHeaders(),
         });
       } else {
-        await axios.post('http://localhost:3000/productos', formData, {
+        await clienteAxios.post('/productos', formData, {
           headers: getHeaders(),
         });
       }
@@ -239,7 +239,7 @@ export default function Productos() {
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar producto?')) return;
     try {
-      await axios.delete(`http://localhost:3000/productos/${id}`, {
+      await clienteAxios.delete(`/productos/${id}`, {
         headers: getHeaders(),
       });
       fetchProductos();
