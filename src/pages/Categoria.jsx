@@ -18,17 +18,18 @@ export default function Categoria() {
     return { Authorization: `Bearer ${token}` };
   }
 
-  async function fetchCategorias() {
-    try {
-      const { data } = await axios.get('http://localhost:3000/categorias', {
-        headers: getHeaders()
-      });
-      setCategorias(Array.isArray(data.categorias) ? data.categorias : []);
-    } catch {
-      setError('Error al cargar categorías');
-      setCategorias([]);
-    }
+ async function fetchCategorias() {
+  try {
+    const { data } = await axios.get('http://localhost:3000/categorias', {
+      headers: getHeaders()
+    });
+    setCategorias(Array.isArray(data) ? data : []);
+  } catch {
+    setError('Error al cargar categorías');
+    setCategorias([]);
   }
+}
+
 
   const handleChange = e => {
     setFormData({ ...formData, [e.target.name]: e.target.value });

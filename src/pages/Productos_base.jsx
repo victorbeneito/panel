@@ -94,7 +94,6 @@ export default function Productos() {
   const [productos, setProductos] = useState([]);
   const [marcas, setMarcas] = useState([]);
   const [categorias, setCategorias] = useState([]);
-  const [nuevaImagen, setNuevaImagen] = useState('');
   const [formData, setFormData] = useState({
     nombre: '',
     descripcion: '',
@@ -102,7 +101,7 @@ export default function Productos() {
     stock: '',
     marca: '',
     categoria: '',
-    imagenes: [],
+    imagenes: '',
     variantes: [{ color: '', imagen: '', tamaño: '', precio_extra: '' }],
     destacado: false,
   });
@@ -125,8 +124,7 @@ export default function Productos() {
       const { data } = await axios.get('http://localhost:3000/productos', {
         headers: getHeaders(),
       });
-      console.log('Respuesta productos API:', data);
-      setProductos(Array.isArray(data.productos) ? data.productos : []);
+      setProductos(data.productos || data);
     } catch {
       setError('Error al cargar productos');
     }
@@ -197,18 +195,17 @@ export default function Productos() {
           headers: getHeaders(),
         });
       }
-     setFormData({
-  nombre: '',
-  descripcion: '',
-  precio: '',
-  stock: '',
-  marca: '',
-  categoria: '',
-  imagenes: [],
-  variantes: [{ color: '', imagen: '', tamaño: '', precio_extra: '' }],
-  destacado: false,
-});
-
+      setFormData({
+        nombre: '',
+        descripcion: '',
+        precio: '',
+        stock: '',
+        marca: '',
+        categoria: '',
+        variantes: [{ color: '', imagen: '', tamaño: '', precio_extra: '' }],
+        destacado: false,
+        
+      });
       setEditingId(null);
       setError('');
       fetchProductos();
@@ -218,23 +215,21 @@ export default function Productos() {
   };
 
   const handleEdit = (producto) => {
-  setFormData({
-    nombre: producto.nombre || '',
-    descripcion: producto.descripcion || '',
-    precio: producto.precio ?? '',
-    stock: producto.stock ?? '',
-    marca: producto.marca?._id || '',
-    categoria: producto.categoria?._id || '',
-    imagenes: Array.isArray(producto.imagenes) ? producto.imagenes : [],
-    variantes:
-      producto.variantes && producto.variantes.length > 0
-        ? producto.variantes
-        : [{ color: '', imagen: '', tamaño: '', precio_extra: '' }],
-    destacado: producto.destacado ?? false,
-  });
-  setEditingId(producto._id);
-};
-
+    setFormData({
+      nombre: producto.nombre,
+      descripcion: producto.descripcion,
+      precio: producto.precio,
+      stock: producto.stock,
+      marca: producto.marca?._id || '',
+      categoria: producto.categoria?._id || '',
+      variantes:
+        producto.variantes.length > 0
+          ? producto.variantes
+          : [{ color: '', imagen: '', tamaño: '', precio_extra: '' }],
+      destacado: producto.destacado || false,
+    });
+    setEditingId(producto._id);
+  };
 
   const handleDelete = async (id) => {
     if (!window.confirm('¿Eliminar producto?')) return;
@@ -326,41 +321,7 @@ export default function Productos() {
           </select>
         </div>
 
-        {/* Gestión de URLs de imágenes */}
-<div>
-  <input
-    type="url"
-    value={nuevaImagen}
-    onChange={e => setNuevaImagen(e.target.value)}
-    placeholder="URL de la imagen"
-    className="w-full border border-gray-300 rounded px-3 py-2 mb-2 focus:outline-none focus:ring-2 focus:ring-indigo-500"
-  />
-  <button
-    type="button"
-    onClick={handleAgregarImagen}
-    className="bg-indigo-600 text-white px-4 py-2 rounded hover:bg-indigo-700 transition mb-2"
-  >
-    Añadir imagen
-  </button>
-  <ul className="space-y-1">
-    {formData.imagenes.map((url, idx) => (
-      <li key={idx} className="flex justify-between items-center border rounded px-2 py-1">
-        <a href={url} target="_blank" rel="noreferrer" className="truncate text-blue-600 hover:underline">
-          {url}
-        </a>
-        <button
-          type="button"
-          onClick={() => handleEliminarImagen(url)}
-          className="text-red-600 hover:underline ml-2"
-        >
-          Eliminar
-        </button>
-      </li>
-    ))}
-  </ul>
-</div>
-
-
+        
 
         {/* Variantes */}
         <h2 className="text-xl font-semibold mb-4">Variantes</h2>
@@ -420,15 +381,8 @@ export default function Productos() {
 
       {/* Listado de productos */}
       <ul className="divide-y divide-gray-200 border-t border-b mt-8">
-        {Array.isArray(productos) && productos.map((p) => (
+        {productos.map((p) => (
           <li key={p._id} className="py-4 flex justify-between items-center">
-           {p.imagenes && p.imagenes.length > 0 && (
-    <img
-      src={p.imagenes[0]}
-      alt={p.nombre}
-      className="w-16 h-16 object-cover rounded"
-    />
-  )}
             <span>
               <strong>{p.nombre}</strong> - Precio: {p.precio} - Stock: {p.stock} - Marca:{' '}
               {p.marca?.nombre || 'N/A'} - Categoría: {p.categoria?.nombre || 'N/A'} {p.destacado && (
