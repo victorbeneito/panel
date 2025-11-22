@@ -3,7 +3,7 @@ import clienteAxios from '../config/axiosClient';
 import { useNavigate } from 'react-router-dom';
 
 // ----------------------------------------------------------
-// Componente de variante
+// Component de la variant
 function VarianteInput({ variante, index, onChange, onRemove }) {
   const [uploading, setUploading] = useState(false);
   const [uploadError, setUploadError] = useState('');
@@ -326,7 +326,7 @@ export default function Productos() {
           </select>
         </div>
 
-        {/* Gestión de URLs de imágenes */}
+        {/* Gestió de URLs de imàtgens */}
 <div>
   <input
     type="url"
@@ -362,7 +362,7 @@ export default function Productos() {
 
 
 
-        {/* Variantes */}
+        {/* Variante */}
         <h2 className="text-xl font-semibold mb-4">Variantes</h2>
         {formData.variantes.map((v, idx) => (
           <VarianteInput
@@ -381,7 +381,7 @@ export default function Productos() {
           Añadir Variante
         </button>
 
-        {/* Checkbox de Producto destacado */}
+        {/* Checkbox de Producte destacat */}
         <div className="flex items-center space-x-2 mt-4">
           <label htmlFor="destacado" className="text-lg text-gray-900">
             Producto destacado
@@ -398,7 +398,7 @@ export default function Productos() {
           />
         </div>
 
-        {/* Botón Guardar */}
+        {/* Botó Guardar */}
         <button
           type="submit"
           className="mt-6 bg-indigo-600 text-white px-6 py-3 rounded hover:bg-indigo-700 transition"
@@ -409,7 +409,7 @@ export default function Productos() {
         {error && <p className="text-red-600 mt-4">{error}</p>}
       </form>
 
-      {/* Botón Volver */}
+      {/* Botó Volver */}
       <button
         type="button"
         onClick={handleVolver}
@@ -418,7 +418,7 @@ export default function Productos() {
         Volver al panel de control
       </button>
 
-      {/* Listado de productos */}
+      {/* Listat de productes */}
       <ul className="divide-y divide-gray-200 border-t border-b mt-8">
         {Array.isArray(productos) && productos.map((p) => (
           <li key={p._id} className="py-4 flex justify-between items-center">

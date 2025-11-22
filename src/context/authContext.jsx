@@ -7,10 +7,10 @@ export function AuthProvider({ children }) {
   const [user, setUser] = useState(null);
 
   useEffect(() => {
-    // Intenta leer token del localStorage
+    // Intenta llegir el token del localStorage 
     const token = localStorage.getItem('token');
     if (token) {
-      // Decodifica el token para obtener el payload (opcional)
+      // Decodifica el token per obtindre el payload (opcional)
       try {
         const payload = JSON.parse(atob(token.split('.')[1]));
         setUser({ email: payload.email, id: payload.id });

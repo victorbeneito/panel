@@ -16,8 +16,8 @@ export default function Login() {
     try {
       const response = await clienteAxios.post('/auth/login', { email, password });
       if (response.data.token) {
-        login(response.data.token); // Guarda token en contexto y localStorage
-        navigate('/dashboard');     // Redirige al dashboard/panel
+        login(response.data.token); // Guarda token en context i localStorage
+        navigate('/dashboard');     // Redirigix al dashboard/panel
       } else {
         setError('Credenciales inválidas');
       }
